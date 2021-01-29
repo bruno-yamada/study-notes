@@ -134,8 +134,40 @@ resource "aws_instance" "web" {
   
 # 4	Use the Terraform CLI (outside of core workflow)
 ## 4a	Given a scenario: choose when to use terraform fmt to format code
+- applies terraform language style conventions, along some minor ajustments for readability
+- ensures consistency, is opinionated, has no customization
+```
+terraform fmt
+terraform fmt my-folder
+cat file.tf | terraform fmt -
+cat file.tf | terraform fmt -
+terraform -list=false # dont list files changed
+terraform -write=false # dont write changes
+terraform -diff # shows diff?
+terraform -check # returns 0 if everything is properly formatted
+terraform -recursive # scans subdirectroies, by default scans only current dir
+```
 ## 4b	Given a scenario: choose when to use terraform taint to taint Terraform resources
+- marks a resource to be destroyed and __recreated__ on next apply
+- does not modify infra, only state (to mark the resource)
+- useful for recreating resources and everything associated with it (reconfiguring, reseting a resource, etc)
+```
+terraform taint aws_instance.my_instance
+terraform taint "aws_instance.my_instance[0]"
+terraform taint 'aws_instance.my_instance["one_instance"]'
+```
+flags:
+```
+-allow-missing # wont return error if the provided resource names does not exists
+-backup=path # path to backup file
+-lock=true # locks state file if supported
+-lock-timeout=10s # duration to retry a state lock
+-state=path # custom state path (defaults to terraform.tfstate)
+-state-out=path # path to write the new state file (defaults to -state)
+-ignore-remote-version # When using the enhanced remote backend with Terraform Cloud, continue even if remote and local Terraform versions differ. This may result in an unusable Terraform Cloud workspace, and should be used with extreme caution
+```
 ## 4c	Given a scenario: choose when to use terraform import to import existing infrastructure into your Terraform state
+
 ## 4d	Given a scenario: choose when to use terraform workspace to create workspaces
 ## 4e	Given a scenario: choose when to use terraform state to view Terraform state
 ## 4f	Given a scenario: choose when to enable verbose logging and what the outcome/value is
