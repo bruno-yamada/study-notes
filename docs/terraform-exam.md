@@ -167,10 +167,92 @@ flags:
 -ignore-remote-version # When using the enhanced remote backend with Terraform Cloud, continue even if remote and local Terraform versions differ. This may result in an unusable Terraform Cloud workspace, and should be used with extreme caution
 ```
 ## 4c	Given a scenario: choose when to use terraform import to import existing infrastructure into your Terraform state
+- imports a given resource by ID to a give resource address in the state
+- flags:
+```
+-backup
+-config=path # provider config to use for the import
+-input
+-lock
+-lock-timeout
+-no-color
+-parallelism=n # limits number of concurrent operations as terraform walks the graph, defaults to 10
+-state
+-state-out
+-var 'foo=bar'
+-var-file=file
+-ignore-remote-version # for TFE, ignores remote even if it differs
+```
+example:
+```
+terraform import 'aws_instance.baz["example"]' i-abcd1234
+```
 
 ## 4d	Given a scenario: choose when to use terraform workspace to create workspaces
+- some backends supports multiple `workspaces`
+- so multiple instances of said configuration can be deployed without changing the backend config
+- backends supporting workspaces: s3, AzureRM, Consul, kubernetes, local, posgres, remote
+```
+terraform workspace list
+terraform workspace show # show current
+terraform workspace new batata
+terraform workspace select batata
+terraform workspace delete batata
+```
+- cannot delete the default workspace
+- can be use to interpolate configs:
+```
+resource "aws_instance" "example" {
+  count = "${terraform.workspace == "default" ? 5 : 1}"
+
+  # ... other arguments
+}
+```
+- useful for creating parallel deployment with same config (A/B) before applying to prod
+- useful for `feature branches`, `1 feature branch` = `1 workspace besides default`
+- not suited for large projects
+- workspace are technically equivalent to `renaming` the `state` file, nothing more complex than that
+- current workspace stored in `.terraform` folder
+- not applicable to terraform cloud
+- if local, a folder `terraform.tfstate.d` is created to store workspaces
+
 ## 4e	Given a scenario: choose when to use terraform state to view Terraform state
+```
+terraform state list # lists alphabetically, then hierarchically
+terraform state list 'module.aws_rds' # lists resources from that module only
+# or by id
+$ terraform state list -id=sg-1234abcd
+module.elb.aws_security_group.sg
+```
+
 ## 4f	Given a scenario: choose when to enable verbose logging and what the outcome/value is
+- configured through setting `TF_LOG` to `TRACE`, `DEBUG`, `INFO`, `WARN` or `ERROR`
+- logs defaults to stdout unless you set `TF_LOG_PATH`
+- crash information is dunped to `crash.log`, reason can be find in the `panic:` line:
+```
+panic: runtime error: invalid memory address or nil pointer dereference
+
+goroutine 123 [running]:
+panic(0xabc100, 0xd93000a0a0)
+    /opt/go/src/runtime/panic.go:464 +0x3e6
+github.com/hashicorp/terraform/builtin/providers/aws.resourceAwsSomeResourceCreate(...)
+    /opt/gopath/src/github.com/hashicorp/terraform/builtin/providers/aws/resource_aws_some_resource.go:123 +0x123
+github.com/hashicorp/terraform/helper/schema.(*Resource).Refresh(...)
+    /opt/gopath/src/github.com/hashicorp/terraform/helper/schema/resource.go:209 +0x123
+github.com/hashicorp/terraform/helper/schema.(*Provider).Refresh(...)
+    /opt/gopath/src/github.com/hashicorp/terraform/helper/schema/provider.go:187 +0x123
+github.com/hashicorp/terraform/rpc.(*ResourceProviderServer).Refresh(...)
+    /opt/gopath/src/github.com/hashicorp/terraform/rpc/resource_provider.go:345 +0x6a
+reflect.Value.call(...)
+    /opt/go/src/reflect/value.go:435 +0x120d
+reflect.Value.Call(...)
+    /opt/go/src/reflect/value.go:303 +0xb1
+net/rpc.(*service).call(...)
+    /opt/go/src/net/rpc/server.go:383 +0x1c2
+created by net/rpc.(*Server).ServeCodec
+    /opt/go/src/net/rpc/server.go:477 +0x49d
+```
+
 
 5	Interact with Terraform modules
 5a	Contrast module source options
