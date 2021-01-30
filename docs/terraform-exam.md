@@ -254,20 +254,125 @@ created by net/rpc.(*Server).ServeCodec
 ```
 
 
-5	Interact with Terraform modules
-5a	Contrast module source options
-5b	Interact with module inputs and outputs
-5c	Describe variable scope within modules/child modules
-5d	Discover modules from the public Terraform Module Registry
-5e	Defining module version
+# 5	Interact with Terraform modules
+- terraform recommends to use subdirectories for environments (thats probably why TFE supports `working directory`)
+```
+dev/
+stg/
+prod/
+README.md
+```
+- helps:
+  - understanding and navigating of complex configs
+  - isolate updates and reduce risk of one update in one file having unintended effects
+  - reduce duplication of code, which is very common if not using modules
+  - facilitates sharing parts of configs between projects
+  - ensure best practices (by using a module that implement best practice such as kms encryption or automatic backups for db instances)
+- can be local or remote
 
-6	Navigate Terraform workflow
-6a	Describe Terraform workflow ( Write -> Plan -> Create )
-6b	Initialize a Terraform working directory (terraform init)
-6c	Validate a Terraform configuration (terraform validate)
-6d	Generate and review an execution plan for Terraform (terraform plan)
-6e	Execute changes to infrastructure with Terraform (terraform apply)
-6f	Destroy Terraform managed infrastructure (terraform destroy)
+module block:
+```
+module "consul" {
+  source  = "hashicorp/consul/aws"
+  version = "0.0.5"
+  servers = 3 # module input var
+
+  # meta args
+  count
+  for_each
+  providers
+  depends_on
+  licecycle
+}
+```
+## 5a	Contrast module source options
+- modules can be found in the official registry at registry.terraform.io, only verified modules appear in search results (assure estability)
+- its integrated directly in terraform, so modules can be referred by `hashicorp/consul/aws` and it will be found in the registry
+- privated modules
+  - their source needs to be specified
+```
+# some might need credentials
+module "vpc" {
+  source = "app.terraform.io/example_corp/vpc/aws"
+  version = "0.9.3"
+}
+```
+- after 0.11 terraform will follow semant versioning to solve module version constraints
+- publishing
+  - done through the UI in terraform registry website, needs to authenticate to github and allow it register a webook
+  - anyone can publish and shared modules
+  - they are managed through git and github (required)
+  - name must start with terraform-*
+  - repo must use semantic tags (`v1.0.1`), which are used for firing the webhook also
+  - repo description is copied to module
+  - must follow the standard module structure
+    - there must be a tf file in the root dir (main.tf, variables.tf, outputs.tf, etc, but it can be a single file)
+    - root module and nested ones must have a README.md
+    - recommended
+      - nested modules under `modules/` folder with their own README.md
+      - variables and outputs must have descriptions
+## 5b	Interact with module inputs and outputs
+- when using for the first time, must call `terraform init` or `terraform get`
+  - init is based on required modules by source
+  - get installs by provided name
+  - they are installed in `.terraform/modules`
+
+## 5c	Describe variable scope within modules/child modules
+- inputs are like function arguments
+- outputs are like return values
+- local values are like a function's temporary values
+```
+variable "image_id" {
+  type        = string
+  description = "The id of the machine image (AMI) to use for the server."
+  default = "ami-askdfalkdfj"
+  sensitive = false # doesnt show value in plan/apply
+  validation {
+    condition     = length(var.availability_zone_names) > 4 && substr(var.image_id, 0, 4) == "ami-"
+    error_message = "The image_id value must be a valid AMI id, starting with \"ami-\"."
+  }
+}
+```
+- setting values
+  - through TFE workspace variables
+  - with `-var='foo=bar'`
+  - with `-var-file=file.tfvars`
+  - automatically in files: `terraform.tfvars`, `terraform.tfvars.json`
+  - files ending with `auto.tfvars` or `auto.tfvars.json`
+  - as environment variables: TF_VAR_foo=bar (terraform may attempt to parse the value based on type contraints (map, tuple, list, etc))
+- loading order
+  - Env vars
+  - terraform.tfvars
+  - terraform.tfvars.json
+  - *.auto.tfvars or *.auto.tfvars.json
+  - `-var` or `-var-file` arguments
+- outputs
+  - can be used by child modules to pass values onto parents
+  - can be used by root modules to print as CLI output
+  - can be accessed through `terraform_remote_state` as data block
+```
+output "instance_ip_addr" {
+  depends_on = module.rds.main
+  description = ""
+  sensitive = false
+  value = aws_instance.server.private_ip
+}
+```
+- a module can only access variables passed to it, and it can pass variables to parent through outputs
+
+## 5d	Discover modules from the public Terraform Module Registry
+- refer to 5a
+
+## 5e	Defining module version
+- refer to 5
+
+# 6	Navigate Terraform workflow
+## 6a	Describe Terraform workflow ( Write -> Plan -> Create )
+## 6b	Initialize a Terraform working directory (terraform init)
+## 6c	Validate a Terraform configuration (terraform validate)
+## 6d	Generate and review an execution plan for Terraform (terraform plan)
+## 6e	Execute changes to infrastructure with Terraform (terraform apply)
+## 6f	Destroy Terraform managed infrastructure (terraform destroy)
 
 7	Implement and maintain state
 7a	Describe default local backend
