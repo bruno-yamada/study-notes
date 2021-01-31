@@ -1091,7 +1091,7 @@ main = rule { valid_time and valid_day }
   - Remote variables
   - Governance
     - Authorization and Authentication
-    - Team-Based permissions
+    - Team-Based permissions (paid tier)
     - Policy enforcing through Sentinel
     - Cost Estimation (for AWS, GCP and Azure)
   - VCS integration
@@ -1101,8 +1101,57 @@ main = rule { valid_time and valid_day }
   - Notifications (Slack, E-mail, Webhooks...)
 
 # Extras
- - [TF Environment Variables](https://www.terraform.io/docs/cli/config/environment-variables.html#tf_data_dir)
- - [TF cli](https://www.terraform.io/docs/cli/commands/index.html)
+- [TF Environment Variables](https://www.terraform.io/docs/cli/config/environment-variables.html#tf_data_dir)
+  - TF_INPUT=0 # useful for pipelines
+  - TF_VAR_name # fill a variable using Environment variables
+  - TF_CLI_ARGS
+    - TF_CLI_ARGS="-input=false"
+    - TF_CLI_ARGS_plan="-refresh=false"
+  - TF_DATA_DIR # change location of `.terraform`, defaults to to current dir, useful if curr dir is not writable
+  - TF_WORKSPACE # `export TF_WORKSPACE=prod` saves you from running `terraform workspace select prod`
+  - TF_IN_AUTOMATION # easy variable to set if running inside automation, keeps terraform from asking from input during execution
+  - TF_REGISTRY_DISCOVERY_RETRY
+  - TF_REGISTRY_CLIENT_TIMEOUT
+  - TF_CLI_CONFIG_FILE
+- `.terraformignore`: ignores certain files from being upload to the cloud for plan and apply operations
+- [TF cli](https://www.terraform.io/docs/cli/commands/index.html)
 ## lifecycle
+```
+resource "aws_instance" "example" {
+  # ...
+
+  create_before_destroy = true
+  prevent_destroy = false
+
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes to tags, e.g. because a management agent
+      # updates these based on some ruleset managed elsewhere.
+      tags,
+    ]
+  }
+}
+```
 ## for_each
+```
+resource "aws_subnet" "example" {
+  for_each = var.subnet_numbers
+
+  vpc_id            = aws_vpc.example.id
+  availability_zone = each.key
+  cidr_block        = cidrsubnet(aws_vpc.example.cidr_block, 8, each.value)
+}
+```
 ## count
+```
+resource "aws_instance" "server" {
+  count = 4 # create four similar EC2 instances
+
+  ami           = "ami-a1b2c3d4"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Server ${count.index}"
+  }
+}
+```
