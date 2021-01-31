@@ -776,6 +776,7 @@ data "aws_ami" "example" {
     Tested = "true"
   }
 }
+```
 
 # usage
 ```
