@@ -1,6 +1,19 @@
 # Terraform Exam
 
 - Terraform is based on the Declarative model through HCL (Hashicorp Configuration Language)
+- [Exame handbook](https://hashicorp-certifications.zendesk.com/hc/en-us/articles/360048211571)
+- You must:
+  - Physical Environment:
+    - be alone
+    - room must be properly lit
+    - clear desk
+    - no phone or headphone within reach
+    - no extra monitors
+    - no leaving the seat
+    - limited background noise
+    - no eating, clear bottle of water permitted
+    - webcam, mic and speaker must be on throughout the exam
+    - proctor must be able to see you for the duration of the exam
 
 ## Install and test PSI browser:
 - https://syscheck.bridge.psiexams.com/?filters=system:bridge,version:standalone,code:ucs
