@@ -18,7 +18,7 @@
   - Page - storage random access files up to 8TB
 
 ## Azure Files
-- fully managed file hshare systme, 
+- fully managed file share system, 
 - can access through SMB
 - can use Azure file sync to cache files in on-prem servers
 - can now completely replace tradicional on-prem file servers and even NAS devices
@@ -91,7 +91,7 @@
 
 ## Storage Accounts
 - [storage-account-overview](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview)
-- [storage-redundancy](http://docs.microsoft.com/azure/storage/common/storage-redundancy)
+- [replication & storage-redundancy](http://docs.microsoft.com/azure/storage/common/storage-redundancy)
 - logical Container that can hold blobs, files, queues tables and disks, must have a unique global name
   - that unique name is prepended to the URL
 - Types:

@@ -1,0 +1,59 @@
+# Managing Azure Blob Storage
+
+- [creating-storage-accounts](https://cloudacademy.com/course/managing-azure-blob-storage/creating-an-azure-storage-account/)
+- Types of Blob Storage:
+  - Page Blobs
+    - 512-byte pages optimized for read and write, common for VM HDs
+  - Block Blobs
+    - large blobs, up to 4.75tb
+    - blocks can be updated or deleted
+  - Append Blobs
+    - optimized for appending
+    - writes only at the end of the blob
+    - existing blocks cannot be deleted or updated
+- common for Azure accounts to have multiple Storage Accounts to organize their services, it is best to use ResourceManager templates for this
+- you can use the AzCopy tool to copy data between storage ontainers/accounts
+  - moving blobs between containers is not natively suported, so they must be copied and then deleted from the source container, can be done with azure portal or powershell RemoveAzureStorageBlob cmdlet
+  - you can also do so programatically through a azure sdk: [Data Movement Library](https://docs.microsoft.com/azure/storage/common/storage-use-data-movement-library)(requires C#/.Net)
+- Moving blobs between Storage Accounts
+  - no native support
+  - can also be done using AzCopy Tool
+  - `azcopy cp <src>?<src sas token> <dst>?<dst sas token>`
+- Blob Properties/Metadata
+  - can be retrieved and set programatically
+  - many of the tools are available from PowerShell
+  - can also be done through the [Rest API](https://docs.microsoft.com/azure/storage/common/storage-rest-api-auth)
+- Blob Leasing
+  - works like locking
+  - access is done through AccessKeys and Secure Access Signatures
+  - leasing ensure  no process can modify or delete the file while some process holds lease over it
+  - a blob lease can be: acquire, release, renew, break, change
+  - can be done through the CLI
+  - lease has an ID, which can be used for renewal(uses same duration as the original), change, etc
+  - lease state can be seen from the Portal UI
+  - set duration to `-1` to get infinite lease
+  - through the portal you can do most of these operations, such as break an existing lease
+  - can also be done through the [Rest API](https://docs.microsoft.com/azure/storage/common/storage-rest-api-auth)
+- Data Archiving and Retention
+  - Premium
+    - high performance SSD, low latency, high transaction rate
+  - Hot
+    - high transaction, hightest cost outside premium, lowest access cost
+  - Cold
+    - lower cost than Hot, higher access cost, data must remain for 30+ days
+  - Archive
+    - lowest storage cost
+    - hightest access cost
+    - data must remain for 180+ days
+    - data is offline
+      - to access it must be rehydrated, by changing it to `hot` or `cold` tier, which can take up to 15h
+- changing tiers can be done through the portal, by blob level, or by powershell, restapi, cli
+- can create LifeCycle Management policies to create rules for automatic archiving rotation(hot>cold>archive>expired) based on file age and access 
+- Immutable Storage Policies
+  - done through the portal, cli, shell, etc
+  - types:
+    - `Time-based retention`
+      - places blobs into container non-writable, non-deletable for a set interval
+    - `Legal Hold`
+      - same as above, but instead of interva, sets a "tag" on the container that locks the blobs until it is removed
+
