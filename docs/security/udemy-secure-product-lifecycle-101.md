@@ -385,14 +385,42 @@ To track and scan a product's components and dependencies
 - Can be integrated throughout the entire product lifecycle
 
 ## Static application security testing (SAST)
+Scanning of a product static code to identify vulnerabilities and known high-risk code patterns
+
+Commonly referrered as inside-out testing or whitebox scanning
+
+Relies on libraries of pre-identified insecure flaws and high risk code patterns
+
+it is useful because identifying it early is way lower cost to fix than later on in the product lifecycle
+
+Can be integratedinto IDE, CI/CD
 
 ## Dynamic application security testing (DAST)
+Scan of __live systems__ to identify vulnerabilities and high risk code patterns
+
+Referred to as blackbox testing, emulates an attacker attempting to invade the system
+
+Many of the vulnerabilities found by DAST is directly exploitable, such as:
+- Cross-site scripting
+- sql injection
+- path disclosure
+- denial of service
+- code execution
+- memory corruption
+- cross-site request forgery
+
+They are complimentary as they usually dont find all ocurrences of vulnerability, and might miss some attack avenues, also might not support some technologies
+
+- Pair with SAST and Pentesting to increase effectiveness
 
 ## Interactive application security testing (IAST)
+To identify vulnerabilities in a product whilst it is being run
 
-## Section 3 and course summary
+Runs from within the application, flagging vulnerabilities while functions are being called
 
----
-Risk Calculation and Impact
-How to mitigate and control risk
-Data governance and privacy
+Some vendors refer to IAST as __glassbox__ testing
+
+relative new concept
+
+# TODO
+add ref to certificate document
