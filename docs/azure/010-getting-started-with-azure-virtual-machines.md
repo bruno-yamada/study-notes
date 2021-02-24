@@ -55,7 +55,7 @@
       - 2 vms, 1 per update domain, which are given update-domain numbers of UD-1
       - when and maintenance update occurs, it is executed one vm at a time, ensuring one of the vms with the id UD-1 is always available
     - fault domain:
-      - container that shares a common power source and network switch
+      - machines that shares a common power source and network switch
   - using availability sets provides VM in 2 to 3 fault domains, which means you are protected from powersource and network outages within a data center
 - Availability Zones
   - protect apps from complete failure of a azure datacenter
@@ -67,6 +67,7 @@
 
 # notes
 - vms deallocated dont result in compute charges
+  - vms stopped still incurr charges
 - when deallocated, dynamically assigned IPs are lost
 - can use static IPs to avoid it
 - if you restart a vm, it does not lose dynamically associante IPs
