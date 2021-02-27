@@ -111,4 +111,10 @@ Deployment Slot
 - useful for blue-green and canary
 - you can select % of users to go to a deployment slot
 
-
+Service Plan tiers:
+- Free (Windows only): Run a small number of apps for free
+- Shared (Windows only): Run more apps and provides support for custom domains
+- Basic: Run unlimited apps and scale up to three instances with built-in load balancing
+- Standard: The first tier recommended for production workloads. It scales up to ten (10) instances with Autoscaling support and VNet integration to access resources in your Azure virtual networks without exposing them to the internet
+- Premium: Scale up to 20 instances and additional storage over the standard tier
+- Isolated: Scale up to 100 instances, runs inside of an Azure Virtual Network isolated from other customers, and supports private access use cases
