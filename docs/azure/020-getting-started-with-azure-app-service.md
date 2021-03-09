@@ -9,6 +9,7 @@ Maybe it is analogous to heroku
 With Azure App Service you can:
 - Authentication and Authorization through Azure AD
 - Application Insights for monitoring
+  - can be turned on through the portal automatically when using the provided runtimes
 - Configure automatic backups
 - Setup a custom domain name
 - Configure TLS/SSL
@@ -97,6 +98,10 @@ Monitoring
   - Can collect web server logs, error messages, etc
   - can select log level
 - Metrics
+  - Retention
+    - per minute for 30 hours
+    - per hour for 30 days
+    - per day for 30 days
 - Alerts
 
 API Documentation
@@ -110,6 +115,10 @@ Deployment Slot
 - plan must be S1 or higher (production tier)
 - useful for blue-green and canary
 - you can select % of users to go to a deployment slot
+- types:
+  - Auto Swap: As soon as an application is deployed to a slot it automatically swaps into a target slot. This is not the same as deploying directly to the target because the application gets a warm start, and the previous release of the target slot is preserved if a rollback is required.
+  - Swap: The most basic swap type that requires you to manually trigger the swap operation.
+  - Swap with preview: This type is similar to a regular swap, but allows you to preview the swap before completing it. Because each slot maintains its own configuration and application settings, the web app may not behave exactly as it did in the originating slot, and that is a good thing.
 
 Service Plan tiers:
 - Free (Windows only): Run a small number of apps for free

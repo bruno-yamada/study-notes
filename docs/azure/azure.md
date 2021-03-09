@@ -25,3 +25,6 @@ az acr build -t app/tetris:1.0 -r $acr_name .
 - [Azure DevOps](https://azure.microsoft.com/en-us/services/devops/)
 - Might be good to study the limitations and FAQs of each topic for the exam
 - Azure App Services  might be an important topic not explored enough in the course
+
+# Questions remaining
+- how to connect vnet peering in separate accounts
