@@ -86,6 +86,7 @@ Integration:
   - create gateway subnet (required, it is a special type of subnet)
   - create gateway (can take up to 45min)
   - create local network gateway
+    - it represents the device you have on your on-prem network
     - has the on-prem network address space and on-prem vpn device public ip
   - config on-prem vpn device
   - deploy vpn connection in azure (to the on-prem vpn device)

@@ -68,11 +68,12 @@ Demo notes:
 ## Azure Front Door
 - Global LB across regions or even clouds
 - has features from Application LB and more
+- works at layer 7 (application)
 - clients are connected to the closest point
 - [details](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview)
 
 Demo notes:
-- steps: create frontend/domains, backend-pools and routing rules
+- steps: create frontend/domains, backend-pools and routing rules to connect the aforementioned
 
 ## Web Application Firewall (WAF)
 - protect from common vulnerabilities 

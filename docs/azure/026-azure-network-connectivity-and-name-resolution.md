@@ -1,6 +1,7 @@
 # Azure Network connectivity and name resolution
 
 ## Virtual Network Peering
+- max 500 per vNet
 - on peerings, from the VNet interfaces
 - can be done across regions or subscriptions
 - cannot do if vnets have overlapping address space
@@ -11,7 +12,7 @@ and the HUB forwards traffic to the other networks, this way each VNet would onl
 ## Virtual Network Gateways
 - takes a long time to create
 - require a dedicated subnet, usually /28
-- creates vms to act as gateway
+- creates 2 vms to act as gateway, one to be active and 1 as fallback
 - is created to be a vpon gateway or expressRoute
 - networks connects to it using IPSec or IKE VPN tunnels
 - can also be used to connect 2 VNEts
