@@ -31,3 +31,8 @@ az acr build -t app/tetris:1.0 -r $acr_name .
 
 ## Questions remaining
 - how to connect vnet peering in separate accounts
+- Definitely check the differences between admnistrator roles:
+  - Co-Administrator
+  - Service Administrator
+  - Account Administrator
+  - Subscription Owner
