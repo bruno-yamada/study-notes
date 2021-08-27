@@ -385,6 +385,7 @@ To track and scan a product's components and dependencies
 - Can be integrated throughout the entire product lifecycle
 
 ## Static application security testing (SAST)
+> eg. SonarQube
 Scanning of a product static code to identify vulnerabilities and known high-risk code patterns
 
 Commonly referrered as inside-out testing or whitebox scanning
