@@ -75,6 +75,7 @@ Regions & Availability Zones
       failover, only one of the pair is updated at a time
   - Availability Zone: physical location within a region, each has its own power
     cooling and networking, minimum of 3 zones per region
+
 Resource Groups
 - Not a resource, but a container for resources
 - can move resources across resource groups and resource-groups can have
@@ -82,7 +83,26 @@ Resource Groups
 - can be used for access control
 - needs a location for storing its metadata
 - removing the resource group will remove all resources within
+
 Azure Resource Manager
 - Resources deployed on Azure use ARM (cli, portal, powershell cmdlets)
 - easy grouping of resources
 - easy tagging for resources (thus easy cost management)
+
+## Chapter 4 - Compute
+Virtual Machines
+- IaaS, Shares hardware with other VMs
+- Pricing is hourly
+- Good if you need access to the OS, have existing infrastructure on VMs
+- Easily manage and monitor huge amount of VMs through the portal and tools
+
+Deploying Your First Azure Virtual Machine
+Scale Sets
+App Services
+Azure Container Instances
+Azure Kubernetes Service
+Azure Virtual Desktop
+Functions
+Demo: Azure App Services
+Summary
+AZ-900 Microsoft Azure Fundamentals 2020 - Compute Quiz
