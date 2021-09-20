@@ -16,6 +16,12 @@ For interacting with Azure, we have the following interfaces:
   - have cloud shell!
   - doesnt have all the azure features
   - is good on-the-go
+- Azure Advisor, gives tips on:
+  - High availability
+  - Security
+  - Performance
+  - Operational Excellence: health alerts
+  - Cost
 
 ### What are ARM templates?
 It seems the templates work in the same declarative and indempotent way terraform works
@@ -58,3 +64,25 @@ Hybrid Cloud
 - Have both public and private cloud
 - usually due to requirements from regulations or governance
 - but it can get complex
+
+## Chapter 3 - Azure Architecture
+Regions & Availability Zones
+- Region: set of datacenters, deployed within latency-defined perimeter,
+  connected through a dedicated low-latency network
+    - Not all features are available in all regions
+    - Price might differ betewen regions
+    - Paired region, each region is paired with another region for outage
+      failover, only one of the pair is updated at a time
+  - Availability Zone: physical location within a region, each has its own power
+    cooling and networking, minimum of 3 zones per region
+Resource Groups
+- Not a resource, but a container for resources
+- can move resources across resource groups and resource-groups can have
+  multiple regions
+- can be used for access control
+- needs a location for storing its metadata
+- removing the resource group will remove all resources within
+Azure Resource Manager
+- Resources deployed on Azure use ARM (cli, portal, powershell cmdlets)
+- easy grouping of resources
+- easy tagging for resources (thus easy cost management)
