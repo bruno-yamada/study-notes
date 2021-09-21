@@ -1,4 +1,4 @@
-# acloud.guru Azure fundamentals
+# acloud.guru Azure fundamentals (AZ-900)
 
 ## Chapter 1 - Cloud Shell
 For interacting with Azure, we have the following interfaces:
