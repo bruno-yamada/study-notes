@@ -139,3 +139,40 @@ Azure Functions
 - a single function of compute
 - A Cloud Guru is serverless
 
+## Chapter 5 - Networking
+Virtual Network (VNet)
+- Subnets: Allows to segregate the address space
+- Beliongs to a single region and subscription
+- VNet Peering allows connection two VNets
+- Network Security Groups are created independently and are associated at the 
+  __Network Interface__ or __subnet__ level
+
+Load Balancer
+- Distribute inbound traffic to backend pool instances, according to rules and
+  health probes
+- Scenarios: internet traffic, internal network traffic, port-forwarding, can
+  also be used for outbound connectivity
+
+Virtual Network Gateway
+- to create a gateway you need to create a gateway subnet
+
+VPN Gateway
+- to traffic between cloud and on-prem
+- needs on-prem gateway
+- also called site-to-site
+- very important for hybrid cloud
+
+Application Gateway
+- Can make routing decisions instead of just load-balancing
+- can have end-to-end encryption
+- can use the same app gateway for multiple sites/backends/machines
+
+Content Delivery Network
+- saves temporary copies of files fetched from the "Origin Server"
+- distributed network of servers, to deliver content closer to users
+- cache and cache invalidation is paramount to CDNs
+
+ExpressRoute
+- Gateways that don't go over the public internet, thus are more secure and
+  private, also faster and with lower latency
+
