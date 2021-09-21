@@ -96,13 +96,46 @@ Virtual Machines
 - Good if you need access to the OS, have existing infrastructure on VMs
 - Easily manage and monitor huge amount of VMs through the portal and tools
 
-Deploying Your First Azure Virtual Machine
 Scale Sets
+- IaaS
+- Looks like Auto Scaling Group from AWS
+- (Needs|works best with) a load balancer
+- Does not cost anything, you pay just for the VMs
+- Useful for high-availability and scalability
+
 App Services
+- PaaS
+- App Services Web Apps
+  - Automatically host an application and have azure manage the infrastructure
+    for it
+  - Three options:
+    - Code Web Apps, based on supported programming languages (.NET, Java,
+      Node.JS, PHP, Python and Ruby)
+    - Container Web Apps, applications are deployed as containers, you can use
+      whatever stack you want on them
+    - API Apps (need to check)
+- Similar to Fargate + API Gateway (?)
+- App Service Plan: 
+
 Azure Container Instances
-Azure Kubernetes Service
+- PaaS
+- Primary services for running containers on Azure
+- Similar to Fargate
+
+Azure Kubernetes Service (AKS)
+- Open source project to manage and orchestrate containers across multiple
+  servers
+- Can be integrated with Azure Container Registry (ACR)
+- Can be integrated with other Identity services from Azure
+
 Azure Virtual Desktop
-Functions
-Demo: Azure App Services
-Summary
-AZ-900 Microsoft Azure Fundamentals 2020 - Compute Quiz
+- Can only use windows OS
+- Connect from anywhere (mobile, browser, windows, mac)
+- Can re-use existing Windows licenses
+- Multiple users can use the same VM
+
+Azure Functions
+- Serverless (infrastructure is abstracted away from the user)
+- a single function of compute
+- A Cloud Guru is serverless
+
