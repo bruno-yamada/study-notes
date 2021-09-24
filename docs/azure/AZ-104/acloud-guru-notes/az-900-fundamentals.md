@@ -176,3 +176,47 @@ ExpressRoute
 - Gateways that don't go over the public internet, thus are more secure and
   private, also faster and with lower latency
 
+## Chapter 6 - Storage
+
+Introduction
+- Storage Account = Unique Azure namespace
+  - every obj has its own unique we address
+- Types of Storage
+  - Blob
+  - Disk
+  - File
+  - Archive
+
+Blob
+- Binary Large Object
+- You create a blob container
+- good for logs, images, video, so forth
+- Blob types (important)
+  - Block: text and binary up to 4.7TB
+  - Append: optimized for append operations, good for logs
+  - Page: files up to 8TB, good for Virtual HD
+- Tiers: three, in order of cost and frequency of access, high to low
+  - Hot
+  - Cool
+  - Archive
+
+Disk
+- Azure manages uptime and backup
+- Tiers (costs low to high)
+  - HDD: low cost, good for backup
+  - Standard SSD: high velocity best for production
+  - Premium SSD: super fast, for critical workloads
+  - Ultra Disk: up to 64TB, for the most demanding workload
+
+File
+- Used to share files across multiple machines and on-prem infrastructure
+- Good for hybrid clouds
+- To have your file server in the cloud
+
+Archive
+- Lowest price
+- Low performance, but durable, encrypted, etc
+- Good for moving data from higher tiers of storage that are no longer used
+- Archive Storage is storage of type "Blob"!
+
+## Chapter 7 - Storage
