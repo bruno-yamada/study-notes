@@ -219,4 +219,30 @@ Archive
 - Good for moving data from higher tiers of storage that are no longer used
 - Archive Storage is storage of type "Blob"!
 
-## Chapter 7 - Storage
+## Chapter 7 - Database
+Cosmos DB
+- NoSQL
+- Multi-region
+- Single digit millisecond latency anywhere in the world
+- Automatically scaled and managed
+- Can get expensive
+
+Azure SQL
+- Easily migrate from on-prem SQL to cloud
+- suggest optimizations and performance improvements using machine learning
+- Two products:
+  - SQL Database: fully managed cloud db
+  - SQL Managed Instance: Seems like an option to add to your on-prem cluster
+
+Azure Database for MySQL
+- Open source
+- PaaS
+
+Azure Database for PostgreSQL
+- No comment
+
+Database Migration Services
+- Dedicated service to help migrate from on-prem MicrosoftSQL to Azure SQL
+- Also can help you migrate MySQL or Postgres dbs to Azure SQL, but additional
+  steps might be required
+
